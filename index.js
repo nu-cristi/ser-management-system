@@ -1,21 +1,26 @@
 //This module is the entry point into the application
-const express = require('express');
+const express = require("express");
 const app = express();
-const port = process.env.PORT || 5001; //Sets the port
+const cors = require("cors");
+const { default: mongoose } = require("mongoose");
+require("dotenv").config();
+const port = process.env.PORT || 4001; //Sets 4001 as default port in case the .env.PORT is being used by something else
+const routes = require("./routes/api");
 
-//Sets up a basic CORS protocol
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-COntrol-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  next();
-});
+app.use(cors()); //Sets up a basic CORS protocol provided by a package
+app.use(express.json()); // Parses incoming JSON requests and puts the parsed data in a request body
+app.use("/", routes);
 
-//Binds application-level middleware to an instance of the app object
-app.use((req, res, next) =>{
-  res.send('Welcome to Express');
-});
 
-//Logs a simple message to the console when the server starts
-app.listen(port, () =>{
-  console.log(`Server is running on port ${port}`);
-});
+// Connects to the database
+mongoose
+  .connect(process.env.ATLAS_URI, {useNewUrlParser: true})
+  .then(() => {
+    // Listens for requests
+    app.listen(port, () => {
+      console.log(`Server is running on port ${port}`);
+    });
+  })
+  .catch((err) => {
+    console.log(err);
+  });

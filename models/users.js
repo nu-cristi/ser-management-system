@@ -1,7 +1,7 @@
 const mongoose = require('mongoose'),
-      Schema = mongoose.Schema,
-      bcrypt = require(bcrypt),
-      SALT_WORK_FACTOR = 10;
+      Schema = mongoose.Schema;
+      // bcrypt = require(bcrypt),
+      // SALT_WORK_FACTOR = 10;
 
 //Creates database schema for a user object
 const UserSchema = new Schema({
@@ -10,5 +10,4 @@ const UserSchema = new Schema({
 });
 
 
-
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('User', UserSchema);
