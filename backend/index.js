@@ -4,7 +4,9 @@ const app = express();
 const cors = require("cors");
 const { default: mongoose } = require("mongoose");
 require("dotenv").config();
-const port = process.env.PORT || 4001; // Sets 4001 as default port in case the .env.PORT is being used by another process.
+// Sets 4000 as default port in order to connect to the client side automatically,
+//  or in case the .env.PORT is being used by another process.
+const port = process.env.PORT || 4000; 
 const routes = require("./routes/api");
 
 app.use(cors()); //Sets up a basic CORS protocol provided by a package.

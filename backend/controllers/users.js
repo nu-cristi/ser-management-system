@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const User = require("../models/users");
-const { use } = require("../routes/api");
 
 // Performs a Read operation, returning a list containing objects of all the users from the database.
 const getUsers = async (req, res, next) => {
