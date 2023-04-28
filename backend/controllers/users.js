@@ -91,9 +91,9 @@ const loginUser = async (req, res, next) => {
 // Performs a Delete operation by comparing a parameter id with the ids of the objects in the database.
 // When a match is found, the corresponding object is removed.
 const deleteUser = async (req, res, next) => {
-  const { email } = req.body;
+  const { id } = req.params;
 
-  const user = await User.findOneAndDelete({ email });
+  const user = await User.findOneAndDelete({ _id: id });
   if (!user) {
     return res.status(404).json({ error: "User not found" });
   }

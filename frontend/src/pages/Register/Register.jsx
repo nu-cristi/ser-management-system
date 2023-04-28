@@ -1,9 +1,9 @@
 import "react-toastify/dist/ReactToastify.css";
-
+// hooks and components
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Register() {
   const [data, setData] = useState({});
@@ -67,6 +67,8 @@ export default function Register() {
         </label>
         <input type="submit" />
       </form>
+      Already own an account?
+      <Link to="/">Log in here!</Link>
       <ToastContainer />
     </div>
   );

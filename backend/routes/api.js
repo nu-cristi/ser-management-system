@@ -10,7 +10,7 @@ const { getUsers,
 router.get("/", getUsers);
 router.post("/register", registerUser);
 router.post("/login", loginUser);
-router.delete("/delete", deleteUser);
+router.delete("/delete/:id", deleteUser);
 router.patch("/update", updateUser);
 
 
