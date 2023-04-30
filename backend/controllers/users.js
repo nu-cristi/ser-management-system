@@ -91,7 +91,7 @@ const loginUser = async (req, res, next) => {
 // Performs a Delete operation by comparing a parameter id with the ids of the objects in the database.
 // When a match is found, the corresponding object is removed.
 const deleteUser = async (req, res, next) => {
-  const { id } = req.params;
+  const { id } = req.body;
 
   const user = await User.findOneAndDelete({ _id: id });
   if (!user) {
@@ -105,14 +105,12 @@ const deleteUser = async (req, res, next) => {
 // Performs an Update operation by comparing a parameter id with the ids of the objects in the database.
 // When a match is found, the already existing information is replaced with the data that is sent along with the request.
 const updateUser = async (req, res, next) => {
-  const { id } = req.params;
-  const user = req.body;
-
-  if (!mongoose.Types.ObjectId.isValid(id)) {
+  const { data } = req.body;
+  if (!mongoose.Types.ObjectId.isValid(data.id)) {
     return res.status(404).json({ error: "User not found" });
   }
 
-  const userUpdate = await User.findByIdAndUpdate(id, { ...user });
+  const userUpdate = await User.findByIdAndUpdate(data.id, { ...data });
   res.status(200).json(userUpdate);
 
   next();
