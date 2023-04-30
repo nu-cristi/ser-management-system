@@ -1,0 +1,51 @@
+.container{
+  position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #0c7ae2e6;
+    width: 40%;
+    height: 60%;
+    justify-content: center;
+    border-radius: 10px;
+    gap: 10px;
+}
+
+.label {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 5%;
+  gap: 5px;
+}
+
+.styled_input {
+  background: none;
+  border-left: none;
+  border-top: none;
+  border-right: none;
+  border-bottom: 1px solid white;
+  color: white;
+
+  &::placeholder {
+    color: rgb(219, 177, 71);
+  }
+
+  &:focus{
+    background: none;
+    border-left: none;
+    border-top: none;
+    border-right: none;
+    border-bottom: 1px solid white;
+  }
+}
+
+.submit_btn {
+  padding: 5px 55px;
+  background: rgb(219, 177, 71);
+  border-radius: 5px;
+  border: none;
+  color: #474782;
+  cursor: pointer;
+  margin-bottom: 15px;
+}

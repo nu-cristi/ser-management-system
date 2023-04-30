@@ -32,7 +32,7 @@ export default function Login() {
       })
       .catch((error) => {
         console.error("There was an error!", error);
-        toast.error("Incorrect email or password")
+        toast.error("Incorrect email or password");
       });
   }
 
@@ -44,30 +44,36 @@ export default function Login() {
 
   return (
     <div className={styles.container}>
-      <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Enter your email:
-          <input
-            type="text"
-            name="email"
-            value={data.email || ""}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Enter your password:
-          <input
-            type="password"
-            name="password"
-            value={data.password || ""}
-            onChange={handleChange}
-          />
-        </label>
-        <input type="submit" />
-      </form>
-      Don't have an account?
-      <Link to="/Register">Sign up here!</Link>
+      <div className={styles.login_container}>
+        <h1>Login</h1>
+        <form onSubmit={handleSubmit} className={styles.form}>
+          <label className={styles.label}>
+            Enter your email:
+            <input
+              placeholder="Email..."
+              className={styles.styled_input}
+              type="text"
+              name="email"
+              value={data.email || ""}
+              onChange={handleChange}
+            />
+          </label>
+          <label className={styles.label}>
+            Enter your password:
+            <input
+              placeholder="Password..."
+              className={styles.styled_input}
+              type="password"
+              name="password"
+              value={data.password || ""}
+              onChange={handleChange}
+            />
+          </label>
+          <input type="submit" className={styles.submit_btn}/>
+        </form>
+        Don't have an account?
+        <Link to="/Register" className={styles.register_link}>Sign up here!</Link>
+      </div>
       <ToastContainer />
     </div>
   );

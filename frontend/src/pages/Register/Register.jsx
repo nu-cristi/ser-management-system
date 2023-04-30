@@ -1,3 +1,4 @@
+import styles from "./styles.module.scss";
 import "react-toastify/dist/ReactToastify.css";
 // hooks and components
 import { useState } from "react";
@@ -24,9 +25,8 @@ export default function Register() {
     axios
       .post("http://localhost:4000/api/users/register", data)
       .then((response) => {
-        console.log(response);
         toast("You have successfully registered an accout");
-        navigate("/")
+        navigate("/");
       })
       .catch((error) => {
         console.error("There was an error!", error);
@@ -35,40 +35,51 @@ export default function Register() {
   }
 
   return (
-    <div>
-      <h1>Register</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Enter your email:
-          <input
-            type="text"
-            name="email"
-            value={data.email || ""}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Choose a username:
-          <input
-            type="text"
-            name="username"
-            value={data.username || ""}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Enter your password:
-          <input
-            type="password"
-            name="password"
-            value={data.password || ""}
-            onChange={handleChange}
-          />
-        </label>
-        <input type="submit" />
-      </form>
-      Already own an account?
-      <Link to="/">Log in here!</Link>
+    <div className={styles.container}>
+      <div className={styles.register_container}>
+        <h1>Register</h1>
+        <form onSubmit={handleSubmit}>
+          <label className={styles.label}>
+            <p>Enter your email:</p>
+            <input
+              className={styles.styled_input}
+              placeholder="Email..."
+              type="text"
+              name="email"
+              value={data.email || ""}
+              onChange={handleChange}
+            />
+          </label>
+          <label className={styles.label}>
+            <p>Choose a username:</p>
+            <input
+              className={styles.styled_input}
+              placeholder="Username..."
+              type="text"
+              name="username"
+              value={data.username || ""}
+              onChange={handleChange}
+            />
+          </label>
+          <label className={styles.label}>
+            <p>Enter your password:</p>
+            <input
+              
+              className={styles.styled_input}
+              placeholder="Password..."
+              type="password"
+              name="password"
+              value={data.password || ""}
+              onChange={handleChange}
+            />
+          </label>
+          <input type="submit" className={styles.submit_btn} />
+        </form>
+        <p>Already own an account?</p>
+        <Link to="/" className={styles.login_link}>
+          Log in here!
+        </Link>
+      </div>
       <ToastContainer />
     </div>
   );

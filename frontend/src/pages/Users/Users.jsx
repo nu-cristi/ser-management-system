@@ -1,19 +1,20 @@
+import styles from "./styles.module.scss";
 import axios from "axios";
 //components and hooks
 import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import { ToastContainer, toast } from "react-toastify";
-import Modal from "../../component/Modal";
+import Modal from "../../components/Modal";
 
 export default function Users() {
   const [data, setData] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [confirm, setConfirm] = useState(false);
   const [modalConfig, setModalConfig] = useState({
-    message: '',
-    actionType: '',
-    userId: ''
-  })
+    message: "",
+    actionType: "",
+    userId: "",
+  });
   useAuth();
 
   useEffect(() => {
@@ -24,51 +25,78 @@ export default function Users() {
 
   const deleteUser = () => {
     axios
-      .delete(`http://localhost:4000/api/users/delete/${modalConfig.userId}`)
+      .delete("http://localhost:4000/api/users/delete", {
+        data: { id: modalConfig.userId },
+      })
       .then(() => {
         toast("User deleted successfully");
       });
   };
 
-  function openModal(e) {
+  const updateUser = (formData) => {
+    axios
+      .patch("http://localhost:4000/api/users/update", {
+        data: {
+          id: modalConfig.userId,
+          email: formData.email,
+          password: formData.password,
+        },
+      })
+      .then(() => {
+        toast("User updated successfully");
+      });
+  };
+
+  const addUser = (formData) => {
+    const data = {
+      email: formData.email,
+      username: formData.username,
+      password: formData.password,
+    };
+    axios.post("http://localhost:4000/api/users/register", data);
+  };
+
+  const openModal = (e) => {
     setIsOpen(true);
     modalConfig.userId = e.target.dataset.id;
-    modalConfig.actionType = e.target.dataset.action
+    modalConfig.actionType = e.target.dataset.action;
     if (modalConfig.actionType === "delete") {
-      modalConfig.message = 'Are you sure you want to delete this user?'
-    } else if (modalConfig.actionType === "new") {
-      modalConfig.message = "Please fill in the requested fields";
-    } else {
-      modalConfig.message = "Update";
+      modalConfig.message = "Are you sure you want to delete this user?";
     }
-  }
+  };
 
-  function confirmAction() {
-    if(modalConfig.actionType === 'delete' ){
+  const confirmAction = (e, formData) => {
+    e.preventDefault();
+    if (modalConfig.actionType === "delete") {
       deleteUser();
-    }else if(modalConfig.actionType === 'new'){
-      console.log('new')
-    }else{
-      console.log("update")
+    } else if (modalConfig.actionType === "new") {
+      addUser(formData);
+    } else if (modalConfig.actionType === "update") {
+      updateUser(formData);
     }
     setConfirm(true);
     setIsOpen(false);
-  }
+  };
 
   return (
-    <>
+    <div className={styles.container}>
       <h1>Users Table:</h1>
-      <input type="button" 
-      value="Add new user"
-      data-action="new"
-      onClick={(e) => openModal(e)}></input>
+      <input
+        className={styles.btn}
+        type="button"
+        value="Add new user"
+        data-action="new"
+        onClick={(e) => openModal(e)}
+      />
       <table>
-        <tbody>
+        <thead>
           <tr>
             <th>Name</th>
             <th>Email</th>
             <th>Actions</th>
           </tr>
+        </thead>
+        <tbody>
           {data &&
             data
               .slice()
@@ -77,8 +105,9 @@ export default function Users() {
                 <tr key={user._id}>
                   <td>{user.username}</td>
                   <td>{user.email}</td>
-                  <td>
+                  <td className={styles.btn_td}>
                     <input
+                      className={styles.btn}
                       data-id={user._id}
                       type="button"
                       value="Delete user"
@@ -86,6 +115,7 @@ export default function Users() {
                       onClick={(e) => openModal(e)}
                     />
                     <input
+                      className={styles.btn}
                       data-id={user._id}
                       type="button"
                       value="Update info"
@@ -97,8 +127,15 @@ export default function Users() {
               ))}
         </tbody>
       </table>
-      {isOpen && <Modal confirmAction={confirmAction} message={modalConfig.message} />}
+      {isOpen && (
+        <Modal
+          confirmAction={confirmAction}
+          message={modalConfig.message}
+          actionType={modalConfig.actionType}
+          setIsOpen={setIsOpen}
+        />
+      )}
       <ToastContainer />
-    </>
+    </div>
   );
 }
