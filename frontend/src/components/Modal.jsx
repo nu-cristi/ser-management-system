@@ -1,5 +1,7 @@
-import { useState } from "react";
 import styles from "./styles.module.scss";
+// hooks
+import { useState } from "react";
+import { handleInputChange } from "../utils";
 
 export default function Modal({
   confirmAction,
@@ -9,14 +11,10 @@ export default function Modal({
 }) {
   const [formData, setFormData] = useState({});
 
-  const handleChange = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    setFormData((prevState) => ({ ...prevState, [name]: value }));
-  };
+  const handleChange = (event) => handleInputChange(event, setFormData);
 
-  // const handleSubmit
-
+  // Renders different jsx based on which crud action is chosen.
+  // Possible improvements: create a form component.
   if (actionType === "delete") {
     return (
       <div className={styles.container}>
@@ -31,7 +29,10 @@ export default function Modal({
     );
   } else if (actionType === "new") {
     return (
-      <form onSubmit={(e) => confirmAction(e, formData)} className={styles.container}>
+      <form
+        onSubmit={(e) => confirmAction(e, formData)}
+        className={styles.container}
+      >
         <label className={styles.label}>
           <p>Enter an email:</p>
           <input
@@ -73,7 +74,11 @@ export default function Modal({
     );
   } else if (actionType === "update") {
     return (
-      <form onSubmit={(e) => confirmAction(e, formData)} className={styles.container}>
+      <form
+        onSubmit={(e) => confirmAction(e, formData)}
+        className={styles.container}
+      >
+        <h3>You can update one or both fields</h3>
         <label className={styles.label}>
           <p>Enter a new email:</p>
           <input

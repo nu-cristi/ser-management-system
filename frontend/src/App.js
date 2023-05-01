@@ -6,8 +6,7 @@ import Login from "./pages/Login/Login";
 import Users from "./pages/Users/Users";
 
 
-function App() {
-
+export default function App() {
   return (
     <>
       <Routes>
@@ -19,5 +18,3 @@ function App() {
     </>
   );
 }
-
-export default App;

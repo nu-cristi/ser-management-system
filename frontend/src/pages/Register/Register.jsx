@@ -5,16 +5,13 @@ import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { handleInputChange } from "../../utils";
 
 export default function Register() {
   const [data, setData] = useState({});
   const navigate = useNavigate();
 
-  const handleChange = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    setData((prevState) => ({ ...prevState, [name]: value }));
-  };
+  const handleChange = (event) => handleInputChange(event, setData);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -26,7 +23,9 @@ export default function Register() {
       .post("http://localhost:4000/api/users/register", data)
       .then((response) => {
         toast("You have successfully registered an accout");
-        navigate("/");
+        setTimeout(() => {
+          navigate("/");
+        }, 2000);
       })
       .catch((error) => {
         console.error("There was an error!", error);
@@ -39,7 +38,7 @@ export default function Register() {
       <div className={styles.register_container}>
         <h1>Register</h1>
         <form onSubmit={handleSubmit}>
-          <label className={styles.label}>
+          <label htmlFor="email" className={styles.label}>
             <p>Enter your email:</p>
             <input
               className={styles.styled_input}
@@ -50,7 +49,7 @@ export default function Register() {
               onChange={handleChange}
             />
           </label>
-          <label className={styles.label}>
+          <label htmlFor="username" className={styles.label}>
             <p>Choose a username:</p>
             <input
               className={styles.styled_input}
@@ -61,10 +60,9 @@ export default function Register() {
               onChange={handleChange}
             />
           </label>
-          <label className={styles.label}>
+          <label htmlFor="password" className={styles.label}>
             <p>Enter your password:</p>
             <input
-              
               className={styles.styled_input}
               placeholder="Password..."
               type="password"
@@ -73,7 +71,9 @@ export default function Register() {
               onChange={handleChange}
             />
           </label>
-          <input type="submit" className={styles.submit_btn} />
+          <button type="submit" className={styles.submit_btn}>
+            Submit
+          </button>
         </form>
         <p>Already own an account?</p>
         <Link to="/" className={styles.login_link}>
