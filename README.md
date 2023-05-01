@@ -1,8 +1,7 @@
 # User Management System Overview
 
 This is a simple user management system that allows users to register, log in, view a list of users, and perform basic CRUD operations on those users using the MERN stack.
-
-
+  
 ## Install and run the project
 
 1. Clone the project:
@@ -49,3 +48,7 @@ $ npm start
 ## If everything worked, you should be prompted to the main page of the application that looks like this:
 
 <img width="1056" alt="Screenshot 2023-05-01 at 21 39 13" src="https://user-images.githubusercontent.com/101981056/235509187-3820904b-c73d-4704-b0a2-53737c8fbc8f.png">
+
+## Database
+
+  The database was created and hosted on Atlas.
