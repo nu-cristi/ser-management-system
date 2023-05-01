@@ -28,11 +28,6 @@ const registerUser = async (req, res, next) => {
       password: hashPassword,
     });
 
-    const token = await jwt.sign({ id: newUser._id }, process.env.TOKEN_KEY, {
-      expiresIn: "24h",
-    });
-
-    newUser.token = token;
     res.status(201).json(newUser);
   } catch (error) {
     res.status(409).json({ message: error.message });
@@ -61,8 +56,10 @@ const loginUser = async (req, res, next) => {
         error: "User not found",
       });
     } else {
+      // Compares passwords
       bcrypt.compare(password, user.password, async (err, data) => {
         if (data) {
+          // Creates a jwt token with the .env key.
           const token = await jwt.sign(
             { id: user._id },
             process.env.TOKEN_KEY,
@@ -71,6 +68,7 @@ const loginUser = async (req, res, next) => {
             }
           );
           if (token)
+            // Sends token and username to the frontend for authorization
             return res.json({
               token: token,
               username: user.username,
@@ -88,7 +86,7 @@ const loginUser = async (req, res, next) => {
   }
 };
 
-// Performs a Delete operation by comparing a parameter id with the ids of the objects in the database.
+// Performs a Delete operation by comparing an id with the ids of the objects in the database.
 // When a match is found, the corresponding object is removed.
 const deleteUser = async (req, res, next) => {
   const { id } = req.body;
@@ -106,11 +104,11 @@ const deleteUser = async (req, res, next) => {
 // When a match is found, the already existing information is replaced with the data that is sent along with the request.
 const updateUser = async (req, res, next) => {
   const { data } = req.body;
-  if (!mongoose.Types.ObjectId.isValid(data.id)) {
-    return res.status(404).json({ error: "User not found" });
-  }
 
   const userUpdate = await User.findByIdAndUpdate(data.id, { ...data });
+  if (!userUpdate) {
+    return res.status(404).json({ error: "User not found" });
+  }
   res.status(200).json(userUpdate);
 
   next();

@@ -4,9 +4,7 @@ const app = express();
 const cors = require("cors");
 const { default: mongoose } = require("mongoose");
 require("dotenv").config();
-// Sets 4000 as default port to allow  the client side to connect automatically, 
-// since the frontend server proxy is set to :4000 by default
-//    or in case the .env.PORT is being used by another process.
+// Sets .env.PORT or 4000 as default port
 const port = process.env.PORT || 4000; 
 const routes = require("./routes/api");
 
