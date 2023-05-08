@@ -49,6 +49,10 @@ $ npm start
 
 <img width="1056" alt="Screenshot 2023-05-01 at 21 39 13" src="https://user-images.githubusercontent.com/101981056/235509187-3820904b-c73d-4704-b0a2-53737c8fbc8f.png">
 
+<img width="1494" alt="Screenshot 2023-05-08 at 13 30 54" src="https://user-images.githubusercontent.com/101981056/236802215-267e2337-77b6-4795-a76c-a10596626de3.png">
+
+<img width="1504" alt="Screenshot 2023-05-08 at 13 32 11" src="https://user-images.githubusercontent.com/101981056/236802172-0825e64e-060c-4c21-8884-9f5692740992.png">
+
 ## Database
 
   The database was created and hosted on Atlas.
